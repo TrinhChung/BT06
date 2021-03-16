@@ -1,0 +1,70 @@
+#include<iostream>
+#include<math.h>
+using namespace std;
+char** Hadamard(int k){
+    if(k==1){
+        char** a=new char*[2];
+        for(int i=0;i<2;i++){
+            a[i]=new char[2];
+        }
+        a[0][0]='.';
+        a[0][1]='.';
+        a[1][0]='.';
+        a[1][1]='o';
+        return a;
+    }
+    if(k>1){
+    int n=pow(2,k);
+    char** a=new char*[n];
+    for(int i=0;i<n;i++){
+        a[i]=new char[n];
+    }
+    char** b=new char*[n];
+    for(int i=0;i<n;i++){
+        b[i]=new char[n];
+    }
+    b=Hadamard(k-1);
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(i<(n/2)){
+                if(j<(n/2)){
+                    a[i][j]=b[i][j];
+                }
+                else{
+                    a[i][j]=b[i][j-(n/2)];
+                }
+            }
+            else{
+                if(j<n/2){
+                    a[i][j]=b[i-n/2][j];
+                }
+                else{
+                    if(b[i-n/2][j-n/2]=='.'){
+                        a[i][j]='o';
+                    }
+                    else{
+                        a[i][j]='.';
+                    }
+                }
+            }
+        }
+    }
+    return a;
+  }
+}
+int main(){
+    int n;
+    cin >>n;
+    char** a;
+    a=Hadamard(n);
+    for(int i=0;i<pow(2,n);i++){
+            if(i>0) cout <<endl;
+        for(int j=0;j<pow(2,n);j++){
+            cout <<a[i][j]<<" ";
+        }
+    }
+    for(int i=0;i<pow(2,n);i++){
+        delete []a[i];
+    }
+
+}

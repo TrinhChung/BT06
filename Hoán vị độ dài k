@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+int a[25]={};
+void xuat(int k){
+    for(int i=1;i<=k;i++){
+        cout <<(char)(a[i]+96);
+    }
+    cout <<endl;
+}
+bool check(int y,int k){
+    for(int i=1;i<=k;i++){
+        if(a[i]==y) return false;
+    }
+    return true;
+}
+void hoanVi(int x,int n,int k){
+    for(int i=1;i<=n;i++){
+        int t=x;
+        for(int j=x;j<=k;j++){
+            a[j]=0;
+        }
+        if(check(i,k)){
+            a[x]=i;
+            if(x==k) xuat(k);
+            else{
+                hoanVi(x+1,n,k);
+            }
+        }
+    }
+}
+int main(){
+    int n,k;
+    cin >>n>>k;
+    hoanVi(1,n,k);
+    return 0;
+}
